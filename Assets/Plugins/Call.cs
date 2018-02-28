@@ -14,7 +14,7 @@ public class Call : MonoBehaviour {
 
 					GUI.Button (new Rect (0, 500, 200, 100), "Get Plugin's Information");
 					//调用成员方法
-					jo.Call ("showMap", true, jo);
+					jo.Call ("showMap", true);
 				}
 			}
         }
