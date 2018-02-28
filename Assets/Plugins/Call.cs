@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Call : MonoBehaviour {
    
+	private AndroidJavaObject jo;
+
 	void OnGUI() {
 
         //调用显示一个文本为“Hello World!”的Toest
@@ -13,9 +15,11 @@ public class Call : MonoBehaviour {
 
 			var context = jc.GetStatic<AndroidJavaObject> ("currentActivity");
 
-			AndroidJavaObject jo = new AndroidJavaObject ("com.yellfun.www.exportaar.MainActivity");
+			if (jo == null) {
 
-			GUI.Button (new Rect (0, 500, 200, 100), "Get Plugin's Information");
+				jo = new AndroidJavaObject ("com.yihai.ky.caotang.MyActivity");
+			}
+
 			//调用成员方法
 			jo.Call ("showMap", true, context);
         }
