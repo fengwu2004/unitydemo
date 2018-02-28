@@ -9,14 +9,15 @@ public class Call : MonoBehaviour {
         if(GUI.Button(new Rect(0, 0, 200, 100), "Show Toest - Hello World!")) {
             //Unity侧调用Android侧代码
 
-			using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
-				using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject> ("currentActivity")) {
+			AndroidJavaClass jc = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 
-					GUI.Button (new Rect (0, 500, 200, 100), "Get Plugin's Information");
-					//调用成员方法
-					jo.Call ("showMap", true);
-				}
-			}
+			var context = jc.GetStatic<AndroidJavaObject> ("currentActivity");
+
+			AndroidJavaObject jo = new AndroidJavaObject ("com.yellfun.www.exportaar.MainActivity");
+
+			GUI.Button (new Rect (0, 500, 200, 100), "Get Plugin's Information");
+			//调用成员方法
+			jo.Call ("showMap", true, context);
         }
     }
 }
