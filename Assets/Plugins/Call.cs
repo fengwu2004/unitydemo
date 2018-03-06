@@ -30,10 +30,7 @@ public class Call : MonoBehaviour {
 				jo = new AndroidJavaObject ("com.yihai.ky.caotang.MyActivity");
 			}
 
-			activity.Call ("runOnUiThread", new AndroidJavaRunnable (() => {
-
-				jo.Call ("showMap", true, activity);
-			}));
+			jo.Call ("showMap", true, activity);
         }
 
  		if (GUI.Button(new Rect(100, 200, 200, 100), "光线"))
