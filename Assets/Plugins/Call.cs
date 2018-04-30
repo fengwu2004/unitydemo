@@ -9,28 +9,35 @@ public class Call : MonoBehaviour {
 
 	private AndroidJavaObject activity;
 
+	void initMap() {
+
+		jc = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+
+		activity = jc.GetStatic<AndroidJavaObject> ("currentActivity");
+
+		jo = new AndroidJavaObject ("com.yihai.ky.caotang.MyActivity");
+		
+		activity.Call ("runOnUiThread", new AndroidJavaRunnable (() => {
+
+			jo.Call ("initMap", activity);
+		}));
+	}
+
+	void Start() {
+
+		Invoke ("initMap", 2);
+	}
+
 	void OnGUI() {
 
         //调用显示一个文本为“Hello World!”的Toest
         if(GUI.Button(new Rect(0, 0, 200, 100), "Show Toest - Hello World!")) {
             //Unity侧调用Android侧代码
 
-			if (jc == null) {
+			activity.Call ("runOnUiThread", new AndroidJavaRunnable (() => {
 			
-				jc = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-			}
-
-			if (activity == null) {
-
-				activity = jc.GetStatic<AndroidJavaObject> ("currentActivity");
-			}
-
-			if (jo == null) {
-
-				jo = new AndroidJavaObject ("com.yihai.ky.caotang.MyActivity");
-			}
-
-			jo.Call ("showMap", true, activity);
+				jo.Call ("showMap", true, activity);
+			}));
         }
 
  		if (GUI.Button(new Rect(100, 200, 200, 100), "光线"))
